@@ -1,0 +1,83 @@
+Flujos I/O en Java
+Los flujos de entrada y salida (I/O Streams) en Java son mecanismos fundamentales para realizar operaciones de lectura y escritura de datos en aplicaciones. 
+Estos flujos permiten la transferencia de datos entre una fuente (como un archivo, red o memoria) y un destino, ya sea en formato binario o de caracteres. 
+Java proporciona un conjunto de clases en el paquete java.io para manejar estos flujos de datos de manera eficiente.
+
+Concepto Básico
+Un flujo en Java representa una secuencia de datos. Hay dos tipos principales de flujos:
+
+Flujos de Entrada (Input Streams): Se utilizan para leer datos de una fuente.
+Flujos de Salida (Output Streams): Se utilizan para escribir datos a un destino.
+Clasificación de los Streams
+1. Byte Streams
+Los flujos de bytes operan con datos binarios (8 bits), como imágenes, audio o cualquier archivo no textual. Son ideales para trabajar con archivos binarios.
+
+InputStream (Entrada): Clase abstracta que representa la base de todos los flujos de entrada de bytes.
+Ejemplo: FileInputStream, BufferedInputStream, DataInputStream.
+OutputStream (Salida): Clase abstracta que representa la base de todos los flujos de salida de bytes.
+Ejemplo: FileOutputStream, BufferedOutputStream, DataOutputStream.
+Ventajas:
+
+Útiles para manejar datos en bruto como imágenes, videos y archivos comprimidos.
+Operan directamente sobre bytes sin conversión.
+Ejemplo de Uso:
+
+FileInputStream fis = new FileInputStream("archivo.bin");
+int dato;
+while ((dato = fis.read()) != -1) {
+    System.out.print(dato);
+}
+fis.close();
+
+2. Character Streams
+Los flujos de caracteres trabajan con datos de texto (16 bits) y son útiles para manejar archivos en formato de texto plano. Estos flujos realizan automáticamente la conversión entre caracteres Unicode y la codificación subyacente del sistema.
+
+Reader (Entrada): Clase abstracta base para todos los flujos de entrada de caracteres.
+
+Ejemplo: FileReader, BufferedReader, InputStreamReader.
+Writer (Salida): Clase abstracta base para todos los flujos de salida de caracteres.
+
+Ejemplo: FileWriter, BufferedWriter, OutputStreamWriter.
+Ventajas:
+
+Facilitan el manejo de datos de texto.
+Soportan múltiples codificaciones (como UTF-8 o ISO-8859-1).
+Ejemplo de Uso:
+
+FileReader fr = new FileReader("archivo.txt");
+int caracter;
+while ((caracter = fr.read()) != -1) {
+    System.out.print((char) caracter);
+}
+fr.close();
+
+Clases Decoradoras
+Java utiliza un patrón de diseño llamado Decorator Pattern para agregar funcionalidades adicionales a los streams. Algunas clases decoradoras incluyen:
+
+Buffered Streams:
+
+Mejoran el rendimiento al reducir las operaciones de I/O directas.
+Ejemplo: BufferedInputStream, BufferedReader.
+Data Streams:
+
+Permiten leer y escribir datos primitivos directamente.
+Ejemplo: DataInputStream, DataOutputStream.
+Conversion Streams:
+
+Convierten entre flujos de bytes y caracteres.
+Ejemplo: InputStreamReader, OutputStreamWriter.
+
+Flujos de I/O y Excepciones
+Debido a que las operaciones de I/O pueden fallar por razones como la falta de acceso al archivo o errores en la red, estas operaciones deben manejarse con cuidado usando estructuras 
+como try-catch o try-with-resources. Este último asegura el cierre automático de los recursos.
+
+Ejemplo con try-with-resources:
+
+try (FileInputStream fis = new FileInputStream("archivo.txt")) {
+    int dato;
+    while ((dato = fis.read()) != -1) {
+        System.out.print((char) dato);
+    }
+} catch (IOException e) {
+    System.out.println("Error: " + e.getMessage());
+}
